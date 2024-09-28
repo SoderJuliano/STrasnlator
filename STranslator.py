@@ -36,15 +36,11 @@ def restore_punctuation(translated_words, words_with_punctuation):
 
 def translate_phrase(text, us_pt_dict, pt_us_dict):
     """Translate a phrase while preserving punctuation and proper nouns."""
-    # Remove punctuation from the text for translation
-    text_no_punctuation = re.sub(r'[.,!?]', '', text)
-    
     # Split the text into words and punctuation
     words_with_punctuation = split_text_with_punctuation(text)
-    clean_text_lower = text_no_punctuation.lower()
     
     # Split the text into words for processing
-    words = clean_text_lower.split()
+    words = [word.strip().lower() for word in re.findall(r'\b\w+\b', text)]
     
     # Attempt to match longer phrases first
     translated_words = []
@@ -82,8 +78,11 @@ def main():
     us_pt_dict = load_dictionary('us_pt.txt')
     pt_us_dict = load_dictionary('pt_us.txt')
 
-    print("Translation System")
+    print("========================================")
+    print("          Tradutor")
+    print("Digite em inglês ou em português; a tradução aparecerá na próxima linha.")
     print("Type 'exitnow' to quit.")
+    print("========================================")
 
     while True:
         text = input("Enter text to translate: ").strip()
